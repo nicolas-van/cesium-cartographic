@@ -12,14 +12,11 @@ export default [{
   plugins: []
 }, {
   input: 'src/cesium-cartographic.mjs',
-  external: ['cesium'],
+  external: [],
   output: {
     file: 'dist/cesium-cartographic.umd.js',
     format: 'umd',
-    name: 'cesiumCartographic',
-    globals: {
-      cesium: 'Cesium'
-    }
+    name: 'cesiumCartographic'
   },
   plugins: [
     nodeResolve(),
