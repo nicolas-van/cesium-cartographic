@@ -7,13 +7,13 @@ Math helper extensions for cartographic calculation in Cesium.js
 
 ## Installation
 
-```
+```bash
 npm install --save cesium cesium-cartographic
 ```
 
 ## Usage
 
-```
+```javascript
 import * as cc from 'cesium-cartographic'
 import * as Cesium from 'cesium'
 
