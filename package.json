@@ -45,7 +45,7 @@
   "bugs": {
     "url": "https://github.com/nicolas-van/cesium-cartographic/issues"
   },
-  "homepage": "https://github.com/nicolas-van/cesium-cartographic#readme",
+  "homepage": "https://nicolas-van.github.io/cesium-cartographic/",
   "peerDependencies": {
     "cesium": "^1.77.0"
   },
