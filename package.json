@@ -42,7 +42,7 @@
     "url": "git+https://github.com/nicolas-van/cesium-cartographic.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/nicolas-van/cesium-cartographic/issues"
   },
