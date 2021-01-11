@@ -2,6 +2,15 @@
   "name": "cesium-cartographic",
   "version": "0.0.1",
   "description": "Math helper extensions for cartographic calculation in Cesium.js",
+  "keywords": [
+    "cesium",
+    "cartographic",
+    "wgs84",
+    "map",
+    "ellipsoid",
+    "coordinate",
+    "earth"
+  ],
   "type": "module",
   "main": "dist/cesium-cartographic.cjs",
   "browser": "src/cesium-cartographic.mjs",
@@ -41,6 +50,10 @@
     "cesium": "^1.77.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-transform-modules-umd": "^7.12.1",
+    "@babel/preset-env": "^7.12.11",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.1",
     "cesium": "^1.77.0",
