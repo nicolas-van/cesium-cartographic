@@ -2,10 +2,7 @@
   "source": {
     "include": [
       "src",
-      "package.json",
-      "README.md",
-      "CONTRIBUTING.md",
-      "LICENSE.md"
+      "README.md"
     ],
     "includePattern": ".js$"
   },
@@ -36,7 +33,7 @@
           "content": "Math helper extensions for cartographic calculation in Cesium.js"
         }
       ],
-      "footer": "cesium-cartographic is licensed under the terms of the MIT license",
+      "footer": "cesium-cartographic is licensed under the terms of the MIT license"
     }
   }
 }
