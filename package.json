@@ -9,7 +9,8 @@
     "map",
     "ellipsoid",
     "coordinate",
-    "earth"
+    "earth",
+    "harvesine"
   ],
   "type": "module",
   "main": "dist/cesium-cartographic.cjs",
