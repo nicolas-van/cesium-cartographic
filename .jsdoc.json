@@ -1,0 +1,42 @@
+{
+  "source": {
+    "include": [
+      "src",
+      "package.json",
+      "README.md",
+      "CONTRIBUTING.md",
+      "LICENSE.md"
+    ],
+    "includePattern": ".js$"
+  },
+  "plugins": ["plugins/markdown"],
+  "opts": {
+    "encoding": "utf8",
+    "readme": "./README.md",
+    "destination": "docs/",
+    "recurse": true,
+    "verbose": true,
+    "template": "./node_modules/clean-jsdoc-theme",
+    "theme_opts": {
+      "theme": "light",
+      "title": "cesium-cartographic",
+      "menu": [
+        {
+          "title": "Github",
+          "link": "https://github.com/nicolas-van/cesium-cartographic"
+        }
+      ],
+      "meta": [
+        {
+          "name": "author",
+          "content": "Nicolas Vanhoren"
+        },
+        {
+          "name": "description",
+          "content": "Math helper extensions for cartographic calculation in Cesium.js"
+        }
+      ],
+      "footer": "cesium-cartographic is licensed under the terms of the MIT license",
+    }
+  }
+}
