@@ -14,7 +14,7 @@ npm install --save cesium cesium-cartographic
 ## Usage
 
 ```
-import * as cc from 'cesium-cartographic`
+import * as cc from 'cesium-cartographic'
 import * as Cesium from 'cesium'
 
 cc.greatCircleGroundDistance(Cesium.Cartographic.fromDegrees(0, 0, 0), Cesium.Cartographic.fromDegrees(1, 1, 0))
