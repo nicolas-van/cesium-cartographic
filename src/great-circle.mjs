@@ -11,7 +11,7 @@ export { MEAN_EARTH_RADIUS }
  * @param {Cesium.Cartographic} carto1 The first cartographic coordinate.
  * @param {Cesium.Cartographic} carto2 The second cartographic coordinate.
  * @param {number} radius The radius in meters (defaults to MEAN_EARTH_RADIUS)
- * @returns {number} The distance
+ * @returns {number} The distance in meters
  */
 function greatCircleGroundDistance (carto1, carto2, radius = MEAN_EARTH_RADIUS) {
   // original javascript implementation from Chris Veness : https://github.com/chrisveness/geodesy
@@ -40,8 +40,8 @@ export { greatCircleGroundDistance }
 /**
  * Calculates the initial bearing to take to navigate from a point to another using the Harvesine formulae.
  *
- * @param {Cesium.Cartographic} carto1 The first cartographic coordinate.
- * @param {Cesium.Cartographic} carto2 The second cartographic coordinate.
+ * @param {Cesium.Cartographic} carto1 The first cartographic coordinate
+ * @param {Cesium.Cartographic} carto2 The second cartographic coordinate
  * @returns {number} The initial bearing in radians (0° = North, 90° = East, 270° = West)
  */
 function greatCircleInitialBearing (carto1, carto2) {
@@ -64,11 +64,11 @@ function greatCircleInitialBearing (carto1, carto2) {
 export { greatCircleInitialBearing }
 
 /**
- * Travels a distance from a given point using a distance and a bearing and returns the new point.
+ * Travels a distance from a given point using a distance and a bearing and returns the new point, using the Harvesine formulae.
  *
  * @param {Cesium.Cartographic} carto The initial cartographic coordinate
  * @param {number} distance The distance to travel in meters
- * @param {number} initialBearing The initial bearing in radians
+ * @param {number} initialBearing The initial bearing in radians (0° = North, 90° = East, 270° = West)
  * @param {number} radius The radius in meters (defaults to MEAN_EARTH_RADIUS)
  * @returns {Cesium.Cartographic} The new position
  */
