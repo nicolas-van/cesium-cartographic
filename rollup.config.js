@@ -4,7 +4,7 @@ import commonjs from '@rollup/plugin-commonjs'
 
 export default [{
   input: 'src/cesium-cartographic.mjs',
-  external: ['cesium'],
+  external: ['cesium', 'nanoassert'],
   output: {
     file: 'dist/cesium-cartographic.cjs',
     format: 'cjs'

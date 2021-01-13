@@ -1,5 +1,6 @@
 
 import * as Cesium from 'cesium'
+import assert from 'nanoassert'
 
 const MEAN_EARTH_RADIUS = 6371000
 
@@ -14,6 +15,9 @@ export { MEAN_EARTH_RADIUS }
  * @returns {number} The distance in meters
  */
 function greatCircleGroundDistance (carto1, carto2, radius = MEAN_EARTH_RADIUS) {
+  assert(carto1, 'carto1 must be defined')
+  assert(carto2, 'carto2 must be defined')
+  assert(typeof radius === 'number', 'radius must be a number')
   // original javascript implementation from Chris Veness : https://github.com/chrisveness/geodesy
 
   // a = sin²(Δφ/2) + cos(φ1)⋅cos(φ2)⋅sin²(Δλ/2)
@@ -45,6 +49,8 @@ export { greatCircleGroundDistance }
  * @returns {number} The initial bearing in radians (0° = North, 90° = East, 270° = West)
  */
 function greatCircleInitialBearing (carto1, carto2) {
+  assert(carto1, 'carto1 must be defined')
+  assert(carto2, 'carto2 must be defined')
   // original javascript implementation from Chris Veness : https://github.com/chrisveness/geodesy
 
   // tanθ = sinΔλ⋅cosφ2 / cosφ1⋅sinφ2 − sinφ1⋅cosφ2⋅cosΔλ
@@ -83,6 +89,9 @@ export { greatCircleInitialBearing }
  *   second point as second element (0° = North, 90° = East, 270° = West)
  */
 function greatCircleTranslation (carto1, carto2, radius = MEAN_EARTH_RADIUS) {
+  assert(carto1, 'carto1 must be defined')
+  assert(carto2, 'carto2 must be defined')
+  assert(typeof radius === 'number', 'radius must be a number')
   const R = radius
   const φ1 = carto1.latitude
   const λ1 = carto1.longitude
@@ -125,6 +134,9 @@ export { greatCircleTranslation }
  * @returns {Cesium.Cartographic} The new position
  */
 function greatCircleTranslate (carto, translation, radius = MEAN_EARTH_RADIUS) {
+  assert(carto, 'carto must be defined')
+  assert(translation, 'translation must be defined')
+  assert(typeof radius === 'number', 'radius must be a number')
   // original javascript implementation from Chris Veness : https://github.com/chrisveness/geodesy
 
   // sinφ2 = sinφ1⋅cosδ + cosφ1⋅sinδ⋅cosθ

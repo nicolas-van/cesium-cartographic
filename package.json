@@ -70,5 +70,8 @@
     "jest": "^26.6.3",
     "jsdoc": "^3.6.6",
     "rollup": "^2.36.1"
+  },
+  "dependencies": {
+    "nanoassert": "^2.0.0"
   }
 }
