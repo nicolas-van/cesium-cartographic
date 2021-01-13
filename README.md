@@ -21,3 +21,7 @@ cc.greatCircleGroundDistance(Cesium.Cartographic.fromDegrees(0, 0, 0), Cesium.Ca
 ```
 
 [See the documentation for the rest.](https://nicolas-van.github.io/cesium-cartographic/)
+
+## References
+
+A huge thank you to Chris Veness for its JavaScript implementations in [geodesy](https://github.com/chrisveness/geodesy).

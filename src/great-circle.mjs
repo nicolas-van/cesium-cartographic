@@ -28,7 +28,7 @@ function greatCircleGroundDistance (carto1, carto2, radius = MEAN_EARTH_RADIUS) 
   const Δφ = φ2 - φ1
   const Δλ = λ2 - λ1
 
-  const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2)
+  const a = Math.pow(Math.sin(Δφ / 2), 2) + Math.cos(φ1) * Math.cos(φ2) * Math.pow(Math.sin(Δλ / 2), 2)
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
   const d = R * c
 
@@ -54,8 +54,10 @@ function greatCircleInitialBearing (carto1, carto2) {
   const φ2 = carto2.latitude
   const Δλ = carto2.longitude - carto1.longitude
 
-  const x = Math.cos(φ1) * Math.sin(φ2) - Math.sin(φ1) * Math.cos(φ2) * Math.cos(Δλ)
-  const y = Math.sin(Δλ) * Math.cos(φ2)
+  const cosφ2 = Math.cos(φ2)
+
+  const x = Math.cos(φ1) * Math.sin(φ2) - Math.sin(φ1) * cosφ2 * Math.cos(Δλ)
+  const y = Math.sin(Δλ) * cosφ2
   const θ = Math.atan2(y, x)
 
   return Cesium.Math.zeroToTwoPi(θ)
@@ -64,31 +66,84 @@ function greatCircleInitialBearing (carto1, carto2) {
 export { greatCircleInitialBearing }
 
 /**
- * Travels a distance from a given point using a distance and a bearing and returns the new point, using the Harvesine formulae.
+ * Calculates the translation from one point to another using the Harvesine formulae. The translation is a tuple containing the ground distance
+ * as first element and the initial bearing as second element. This function returns the same results than `greatCircleDistance()` and
+ * `greatCircleInitialBearing()` but requires less computation than calling both functions in succession.
+ *
+ * This function shares the following quasi-equality with `greatCircleTranslate()`:
+ *
+ * // given a and b, two Cartographic
+ * greatCircleTranslate(a, greatCircleTranslation(a, b)) ~= b
+ *
+ * @param {Cesium.Cartographic} carto1 The first cartographic coordinate.
+ * @param {Cesium.Cartographic} carto2 The second cartographic coordinate.
+ * @param {number} radius The radius in meters (defaults to MEAN_EARTH_RADIUS)
+ * @returns {Array} A tuple containing the distance in meters between the two points as first element and the initial bearing in radians from first point to
+ *   second point as second element (0° = North, 90° = East, 270° = West)
+ */
+function greatCircleTranslation (carto1, carto2, radius = MEAN_EARTH_RADIUS) {
+  const R = radius
+  const φ1 = carto1.latitude
+  const λ1 = carto1.longitude
+  const φ2 = carto2.latitude
+  const λ2 = carto2.longitude
+  const Δφ = φ2 - φ1
+  const Δλ = λ2 - λ1
+
+  const cosφ1 = Math.cos(φ1)
+  const cosφ2 = Math.cos(φ2)
+
+  const a = Math.pow(Math.sin(Δφ / 2), 2) + cosφ1 * cosφ2 * Math.pow(Math.sin(Δλ / 2), 2)
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+  const d = R * c
+
+  const x = cosφ1 * Math.sin(φ2) - Math.sin(φ1) * cosφ2 * Math.cos(Δλ)
+  const y = Math.sin(Δλ) * cosφ2
+  const θ = Math.atan2(y, x)
+
+  return [d, Cesium.Math.zeroToTwoPi(θ)]
+}
+
+export { greatCircleTranslation }
+
+/**
+ * Travels a distance from a given point with a given translation using the Harvesine formulae. The translation is a tuple
+ * containing the ground distance as first element and the initial bearing as second element, as returned by the `greatCircleTranslation()`
+ * function.
+ *
+ * This function shares the following quasi-equality with `greatCircleTranslation()`:
+ *
+ * // given a and b, two Cartographic
+ * greatCircleTranslate(a, greatCircleTranslation(a, b)) ~= b
  *
  * @param {Cesium.Cartographic} carto The initial cartographic coordinate
- * @param {number} distance The distance to travel in meters
- * @param {number} initialBearing The initial bearing in radians (0° = North, 90° = East, 270° = West)
+ * @param {Array} translation The translation to apply. It is a tuple where the first element is the ground distance in meters and the second
+ * element is the initial bearing in radians (0° = North, 90° = East, 270° = West)
  * @param {number} radius The radius in meters (defaults to MEAN_EARTH_RADIUS)
  * @returns {Cesium.Cartographic} The new position
  */
-function greatCircleDestination (carto, distance, initialBearing, radius = MEAN_EARTH_RADIUS) {
+function greatCircleTranslate (carto, translation, radius = MEAN_EARTH_RADIUS) {
   // original javascript implementation from Chris Veness : https://github.com/chrisveness/geodesy
 
   // sinφ2 = sinφ1⋅cosδ + cosφ1⋅sinδ⋅cosθ
   // tanΔλ = sinθ⋅sinδ⋅cosφ1 / cosδ−sinφ1⋅sinφ2
   // see mathforum.org/library/drmath/view/52049.html for derivation
 
-  const δ = distance / radius // angular distance in radians
-  const θ = initialBearing
+  const δ = translation[0] / radius // angular distance in radians
+  const θ = translation[1]
 
   const φ1 = carto.latitude
   const λ1 = carto.longitude
 
-  const sinφ2 = Math.sin(φ1) * Math.cos(δ) + Math.cos(φ1) * Math.sin(δ) * Math.cos(θ)
+  const cosφ1 = Math.cos(φ1)
+  const sinφ1 = Math.sin(φ1)
+  const cosδ = Math.cos(δ)
+  const sinδ = Math.sin(δ)
+
+  const sinφ2 = sinφ1 * cosδ + cosφ1 * sinδ * Math.cos(θ)
   const φ2 = Math.asin(sinφ2)
-  const y = Math.sin(θ) * Math.sin(δ) * Math.cos(φ1)
-  const x = Math.cos(δ) - Math.sin(φ1) * sinφ2
+  const y = Math.sin(θ) * sinδ * cosφ1
+  const x = cosδ - sinφ1 * sinφ2
   const λ2 = λ1 + Math.atan2(y, x)
 
   const lat = φ2
@@ -97,4 +152,4 @@ function greatCircleDestination (carto, distance, initialBearing, radius = MEAN_
   return new Cesium.Cartographic(lon, lat, 0)
 }
 
-export { greatCircleDestination }
+export { greatCircleTranslate }
