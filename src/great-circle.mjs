@@ -73,6 +73,7 @@ export { greatCircleInitialBearing }
  * This function shares the following quasi-equality with `greatCircleTranslate()`:
  *
  * // given a and b, two Cartographic
+ *
  * greatCircleTranslate(a, greatCircleTranslation(a, b)) ~= b
  *
  * @param {Cesium.Cartographic} carto1 The first cartographic coordinate.
@@ -114,6 +115,7 @@ export { greatCircleTranslation }
  * This function shares the following quasi-equality with `greatCircleTranslation()`:
  *
  * // given a and b, two Cartographic
+ *
  * greatCircleTranslate(a, greatCircleTranslation(a, b)) ~= b
  *
  * @param {Cesium.Cartographic} carto The initial cartographic coordinate
