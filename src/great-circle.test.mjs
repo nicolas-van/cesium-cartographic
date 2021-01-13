@@ -49,3 +49,13 @@ test('great-circle translation', async () => {
   const cartoC = gc.greatCircleTranslate(carto2, [t[0], nt[1]])
   expectSameCarto(cartoC, carto1)
 })
+
+test('great-circle no move', async () => {
+  const carto1 = Cesium.Cartographic.fromDegrees(0, 0, 0)
+
+  const t = gc.greatCircleTranslation(carto1, carto1)
+  expect(t[0]).toBeCloseTo(0, 9)
+
+  const carto2 = gc.greatCircleTranslate(carto1, t)
+  expectSameCarto(carto1, carto2)
+})
