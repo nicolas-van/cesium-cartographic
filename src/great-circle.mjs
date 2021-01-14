@@ -72,6 +72,30 @@ function greatCircleInitialBearing (carto1, carto2) {
 export { greatCircleInitialBearing }
 
 /**
+ * Calculates the end bearing of a trajectory that would go from one point to another using the Harvesine formulae.
+ *
+ * @param {Cesium.Cartographic} carto1 The first cartographic coordinate
+ * @param {Cesium.Cartographic} carto2 The second cartographic coordinate
+ * @returns {number} The end bearing in radians (0° = North, 90° = East, 270° = West)
+ */
+function greatCircleEndBearing (carto1, carto2) {
+  /*
+    The usual algorithm gives strange results when carto1 === carto2 or for very small distances. In these cases the initial
+    bearing and the end bearing can be complete opposites. This behavior is not important for most applications can be critical if
+    we try to compare the initial bearing and the end bearing. We solve this problem by comparing the coordinates and just using
+    the initial bearing if the distance is too short. (< 10 µm on Earth)
+  */
+  const e = Cesium.Math.EPSILON12
+  if (Math.abs(carto1.latitude - carto2.latitude) < e && Math.abs(carto1.longitude - carto2.longitude) < e) {
+    return greatCircleInitialBearing(carto1, carto2)
+  } else {
+    return Cesium.Math.zeroToTwoPi(greatCircleInitialBearing(carto2, carto1) + Math.PI)
+  }
+}
+
+export { greatCircleEndBearing }
+
+/**
  * Calculates the translation from one point to another using the Harvesine formulae. The translation is a tuple containing the ground distance
  * as first element and the initial bearing as second element. This function returns the same results than `greatCircleDistance()` and
  * `greatCircleInitialBearing()` but requires less computation than calling both functions in succession.

@@ -9,14 +9,14 @@ const expectSameCarto = (carto1, carto2) => {
   expect(Cesium.Cartesian3.distance(c1, c2)).toBeCloseTo(0, 3)
 }
 
-test('great-circle bearing', async () => {
+test('great-circle bearing', () => {
   expect(gc.greatCircleInitialBearing(Cesium.Cartographic.fromDegrees(0, 0, 0), Cesium.Cartographic.fromDegrees(0, 10, 0))).toBeCloseTo(0, 5)
   expect(gc.greatCircleInitialBearing(Cesium.Cartographic.fromDegrees(0, 0, 0), Cesium.Cartographic.fromDegrees(10, 0, 0))).toBeCloseTo(Math.PI / 2, 5)
   expect(gc.greatCircleInitialBearing(Cesium.Cartographic.fromDegrees(0, 0, 0), Cesium.Cartographic.fromDegrees(0, -10, 0))).toBeCloseTo(Math.PI, 5)
   expect(gc.greatCircleInitialBearing(Cesium.Cartographic.fromDegrees(0, 0, 0), Cesium.Cartographic.fromDegrees(-10, 0, 0))).toBeCloseTo(Math.PI * (3 / 2), 5)
 })
 
-test('great-circle triplet', async () => {
+test('great-circle triplet', () => {
   const carto1 = Cesium.Cartographic.fromDegrees(0, 0, 0)
   const carto2 = Cesium.Cartographic.fromDegrees(10, 10, 0)
 
@@ -32,7 +32,7 @@ test('great-circle triplet', async () => {
   expectSameCarto(cartoC, carto1)
 })
 
-test('great-circle translation', async () => {
+test('great-circle translation', () => {
   const carto1 = Cesium.Cartographic.fromDegrees(0, 0, 0)
   const carto2 = Cesium.Cartographic.fromDegrees(10, 10, 0)
 
@@ -50,7 +50,7 @@ test('great-circle translation', async () => {
   expectSameCarto(cartoC, carto1)
 })
 
-test('great-circle no move', async () => {
+test('great-circle no move', () => {
   const carto1 = Cesium.Cartographic.fromDegrees(0, 0, 0)
 
   const t = gc.greatCircleTranslation(carto1, carto1)
@@ -58,4 +58,18 @@ test('great-circle no move', async () => {
 
   const carto2 = gc.greatCircleTranslate(carto1, t)
   expectSameCarto(carto1, carto2)
+})
+
+test('great-circle end bearing', () => {
+  const carto1 = Cesium.Cartographic.fromDegrees(0, 0, 0)
+  const carto2 = Cesium.Cartographic.fromDegrees(10, 10, 0)
+
+  const ib = gc.greatCircleInitialBearing(carto1, carto2)
+  const eb = gc.greatCircleEndBearing(carto1, carto2)
+  expect(Math.abs(ib - eb)).toBeGreaterThan(0)
+  expect(Math.abs(ib - eb)).toBeLessThan(Math.PI / 4)
+
+  const ib2 = gc.greatCircleInitialBearing(carto1, carto1)
+  const eb2 = gc.greatCircleEndBearing(carto1, carto1)
+  expect(Math.abs(ib2 - eb2)).toBeLessThan(Cesium.Math.EPSILON19)
 })
