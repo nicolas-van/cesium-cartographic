@@ -64,7 +64,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html"><div class="text">cesium-cartographic</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><ul><li><a href='https://github.com/nicolas-van/cesium-cartographic' class='' id='' target=''>Github</a></li></ul><h3><a href="global.html">Global</a></h3><ul><li><a href="global.html#greatCircleGroundDistance">greatCircleGroundDistance</a></li><li><a href="global.html#greatCircleInitialBearing">greatCircleInitialBearing</a></li><li><a href="global.html#greatCircleTranslate">greatCircleTranslate</a></li><li><a href="global.html#greatCircleTranslation">greatCircleTranslation</a></li></ul></div>
+    <h2><a href="index.html"><div class="text">cesium-cartographic</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><ul><li><a href='https://github.com/nicolas-van/cesium-cartographic' class='' id='' target=''>Github</a></li></ul><h3><a href="global.html">Global</a></h3><ul><li><a href="global.html#greatCircleEndBearing">greatCircleEndBearing</a></li><li><a href="global.html#greatCircleGroundDistance">greatCircleGroundDistance</a></li><li><a href="global.html#greatCircleInitialBearing">greatCircleInitialBearing</a></li><li><a href="global.html#greatCircleTranslate">greatCircleTranslate</a></li><li><a href="global.html#greatCircleTranslation">greatCircleTranslation</a></li></ul></div>
 </nav>
 
 <div id="main">
@@ -151,6 +151,30 @@ function greatCircleInitialBearing (carto1, carto2) {
 }
 
 export { greatCircleInitialBearing }
+
+/**
+ * Calculates the end bearing of a trajectory that would go from one point to another using the Harvesine formulae.
+ *
+ * @param {Cesium.Cartographic} carto1 The first cartographic coordinate
+ * @param {Cesium.Cartographic} carto2 The second cartographic coordinate
+ * @returns {number} The end bearing in radians (0° = North, 90° = East, 270° = West)
+ */
+function greatCircleEndBearing (carto1, carto2) {
+  /*
+    The usual algorithm gives strange results when carto1 === carto2 or for very small distances. In these cases the initial
+    bearing and the end bearing can be complete opposites. This behavior is not important for most applications can be critical if
+    we try to compare the initial bearing and the end bearing. We solve this problem by comparing the coordinates and just using
+    the initial bearing if the distance is too short. (&lt; 10 µm on Earth)
+  */
+  const e = Cesium.Math.EPSILON12
+  if (Math.abs(carto1.latitude - carto2.latitude) &lt; e &amp;&amp; Math.abs(carto1.longitude - carto2.longitude) &lt; e) {
+    return greatCircleInitialBearing(carto1, carto2)
+  } else {
+    return Cesium.Math.zeroToTwoPi(greatCircleInitialBearing(carto2, carto1) + Math.PI)
+  }
+}
+
+export { greatCircleEndBearing }
 
 /**
  * Calculates the translation from one point to another using the Harvesine formulae. The translation is a tuple containing the ground distance
@@ -271,7 +295,7 @@ export { greatCircleTranslate }
 <script src="scripts/linenumber.js"></script>
 <script src="scripts/fix-code-block.js"></script>
 <script>
-  var list = [{"title":"greatCircleGroundDistance","link":"<a href=\"global.html#greatCircleGroundDistance\">Global &rtrif; greatCircleGroundDistance</a>"},{"title":"greatCircleInitialBearing","link":"<a href=\"global.html#greatCircleInitialBearing\">Global &rtrif; greatCircleInitialBearing</a>"},{"title":"greatCircleTranslate","link":"<a href=\"global.html#greatCircleTranslate\">Global &rtrif; greatCircleTranslate</a>"},{"title":"greatCircleTranslation","link":"<a href=\"global.html#greatCircleTranslation\">Global &rtrif; greatCircleTranslation</a>"}];
+  var list = [{"title":"greatCircleEndBearing","link":"<a href=\"global.html#greatCircleEndBearing\">Global &rtrif; greatCircleEndBearing</a>"},{"title":"greatCircleGroundDistance","link":"<a href=\"global.html#greatCircleGroundDistance\">Global &rtrif; greatCircleGroundDistance</a>"},{"title":"greatCircleInitialBearing","link":"<a href=\"global.html#greatCircleInitialBearing\">Global &rtrif; greatCircleInitialBearing</a>"},{"title":"greatCircleTranslate","link":"<a href=\"global.html#greatCircleTranslate\">Global &rtrif; greatCircleTranslate</a>"},{"title":"greatCircleTranslation","link":"<a href=\"global.html#greatCircleTranslation\">Global &rtrif; greatCircleTranslation</a>"}];
   var options = 
   setupSearch(list, options)
 </script>

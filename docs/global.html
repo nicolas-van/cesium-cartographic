@@ -64,7 +64,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html"><div class="text">cesium-cartographic</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><ul><li><a href='https://github.com/nicolas-van/cesium-cartographic' class='' id='' target=''>Github</a></li></ul><h3><a href="global.html">Global</a></h3><ul><li><a href="global.html#greatCircleGroundDistance">greatCircleGroundDistance</a></li><li><a href="global.html#greatCircleInitialBearing">greatCircleInitialBearing</a></li><li><a href="global.html#greatCircleTranslate">greatCircleTranslate</a></li><li><a href="global.html#greatCircleTranslation">greatCircleTranslation</a></li></ul></div>
+    <h2><a href="index.html"><div class="text">cesium-cartographic</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><ul><li><a href='https://github.com/nicolas-van/cesium-cartographic' class='' id='' target=''>Github</a></li></ul><h3><a href="global.html">Global</a></h3><ul><li><a href="global.html#greatCircleEndBearing">greatCircleEndBearing</a></li><li><a href="global.html#greatCircleGroundDistance">greatCircleGroundDistance</a></li><li><a href="global.html#greatCircleInitialBearing">greatCircleInitialBearing</a></li><li><a href="global.html#greatCircleTranslate">greatCircleTranslate</a></li><li><a href="global.html#greatCircleTranslation">greatCircleTranslation</a></li></ul></div>
 </nav>
 
 <div id="main">
@@ -105,6 +105,191 @@
 
     
         <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="greatCircleEndBearing">
+        <a href="#greatCircleEndBearing">#</a>
+        <span class="type-signature"></span>greatCircleEndBearing<span class="signature">(carto1, carto2)</span><span class="type-signature"> &rarr; {number}</span>
+    </h4>
+
+    
+
+
+
+    <div class="description">
+        <p>Calculates the end bearing of a trajectory that would go from one point to another using the Harvesine formulae.</p>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
+        <strong>Parameters:</strong>
+        
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>carto1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Cesium.Cartographic</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The first cartographic coordinate</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>carto2</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Cesium.Cartographic</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The second cartographic coordinate</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source"><ul class="dummy"><li>
+                <a href="great-circle.mjs.html">great-circle.mjs</a>, <a href="great-circle.mjs.html#line81">line 81</a>
+            </li></ul></dd>
+        </div>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="method-member-container mt-20">
+    <strong>Returns:</strong>
+        
+            
+<div class="param-desc">
+    <p>The end bearing in radians (0° = North, 90° = East, 270° = West)</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    </div>
+
+
+
 
         
             
@@ -662,7 +847,7 @@ element is the initial bearing in radians (0° = North, 90° = East, 270° = Wes
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="great-circle.mjs.html">great-circle.mjs</a>, <a href="great-circle.mjs.html#line136">line 136</a>
+                <a href="great-circle.mjs.html">great-circle.mjs</a>, <a href="great-circle.mjs.html#line160">line 160</a>
             </li></ul></dd>
         </div>
     
@@ -875,7 +1060,7 @@ as first element and the initial bearing as second element. This function return
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="great-circle.mjs.html">great-circle.mjs</a>, <a href="great-circle.mjs.html#line91">line 91</a>
+                <a href="great-circle.mjs.html">great-circle.mjs</a>, <a href="great-circle.mjs.html#line115">line 115</a>
             </li></ul></dd>
         </div>
     
@@ -956,7 +1141,7 @@ second point as second element (0° = North, 90° = East, 270° = West)</p>
 <script src="scripts/linenumber.js"></script>
 <script src="scripts/fix-code-block.js"></script>
 <script>
-  var list = [{"title":"greatCircleGroundDistance","link":"<a href=\"global.html#greatCircleGroundDistance\">Global &rtrif; greatCircleGroundDistance</a>"},{"title":"greatCircleInitialBearing","link":"<a href=\"global.html#greatCircleInitialBearing\">Global &rtrif; greatCircleInitialBearing</a>"},{"title":"greatCircleTranslate","link":"<a href=\"global.html#greatCircleTranslate\">Global &rtrif; greatCircleTranslate</a>"},{"title":"greatCircleTranslation","link":"<a href=\"global.html#greatCircleTranslation\">Global &rtrif; greatCircleTranslation</a>"}];
+  var list = [{"title":"greatCircleEndBearing","link":"<a href=\"global.html#greatCircleEndBearing\">Global &rtrif; greatCircleEndBearing</a>"},{"title":"greatCircleGroundDistance","link":"<a href=\"global.html#greatCircleGroundDistance\">Global &rtrif; greatCircleGroundDistance</a>"},{"title":"greatCircleInitialBearing","link":"<a href=\"global.html#greatCircleInitialBearing\">Global &rtrif; greatCircleInitialBearing</a>"},{"title":"greatCircleTranslate","link":"<a href=\"global.html#greatCircleTranslate\">Global &rtrif; greatCircleTranslate</a>"},{"title":"greatCircleTranslation","link":"<a href=\"global.html#greatCircleTranslation\">Global &rtrif; greatCircleTranslation</a>"}];
   var options = 
   setupSearch(list, options)
 </script>
